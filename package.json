@@ -1,0 +1,29 @@
+{
+  "name": "base-bot",
+  "version": "0.0.1",
+  "description": "A base bot with database, hybrid commands",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "DiscordBot"
+  ],
+  "author": "Ghost",
+  "license": "ISC",
+  "dependencies": {
+    "@anishshobith/deeptype": "^1.1.0",
+    "chalk": "^4.1.2",
+    "discord.js": "^14.7.1",
+    "glob": "^10.0.0",
+    "node-cache": "^5.1.2",
+    "pg": "^8.9.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.28.0",
+    "sourcebin": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-tesseract": "^0.3.0"
+  }
+}

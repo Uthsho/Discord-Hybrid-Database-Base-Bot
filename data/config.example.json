@@ -1,0 +1,15 @@
+{
+    "debug": false,
+    "token": "",
+    "CLIENT_ID": "",
+    "prefix": "",
+    "admin": [],
+    "owner": [],
+    "db": {
+        "database": "",
+		"username": "",
+		"password": "",
+		"dialect": "",
+		"logging": true
+    }
+}
