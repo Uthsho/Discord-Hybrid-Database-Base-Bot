@@ -33,6 +33,10 @@ class Bot extends Client {
 		}
 	}
 
+	async boot() {
+		await this.login(this.config.token);
+	}
+
 }
 
 module.exports = Bot;
