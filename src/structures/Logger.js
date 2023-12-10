@@ -29,6 +29,11 @@ class Logger {
 		console.log(chalk.red.dim(`[Process ${process.pid}] [Cluster ${this.id}] [${title}] ${message}`));
 	}
 
+	crash(title, message) {
+		console.log(chalk.red.dim(`[Process ${process.pid}] [Cluster ${this.id}] [${title}] ${message}`));
+		process.exit(1);
+	}
+
 }
 
 module.exports = Logger;

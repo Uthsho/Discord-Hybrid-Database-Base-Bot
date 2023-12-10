@@ -3,6 +3,8 @@ const intents = require('../../data/intents');
 const Logger = require('./Logger');
 const Util = require('./Util');
 const Embeds = require('../base/Embeds');
+// eslint-disable-next-line no-unused-vars
+const Command = require('../base/Command');
 
 class Bot extends Client {
 
@@ -22,6 +24,10 @@ class Bot extends Client {
 
 		this.utils = new Util(this);
 
+		/**
+		 * The commands of the bot.
+		 * @type {Collection<string, Command>}
+		 */
 		this.commands = new Collection();
 
 		this.events = new Collection();

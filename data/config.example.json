@@ -5,6 +5,9 @@
     "prefix": "",
     "admin": [],
     "owner": [],
+    "private_server": {
+        "id": ""
+    },
     "db": {
         "database": "",
 		"username": "",
