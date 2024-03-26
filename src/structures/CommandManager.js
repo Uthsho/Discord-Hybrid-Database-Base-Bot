@@ -1,4 +1,4 @@
-const { Collection } = require('discord.js');
+const { Collection, CommandInteraction } = require('discord.js');
 const Command = require('../base/Command');
 const path = require('path');
 const Bot = require('./Bot');
@@ -139,6 +139,18 @@ class CommandManager {
 		}
 
 		this.client.logger.log('Slash Commands', 'Successfully uploaded slash commands to Discord API.');
+	}
+
+	/**
+	 *
+	 * @param {CommandInteraction} interaction Interaction
+	 */
+	async handleInteractionEvent(interaction) {
+		const command = this.cache.get(interaction.commandName);
+
+		if (!command) return;
+
+		
 	}
 
 }
