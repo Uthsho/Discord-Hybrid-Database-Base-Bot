@@ -5,6 +5,7 @@ const Util = require('./Util');
 const Embeds = require('../base/Embeds');
 // eslint-disable-next-line no-unused-vars
 const Command = require('../base/Command');
+const CommandManager = require('./CommandManager');
 
 class Bot extends Client {
 
@@ -24,15 +25,9 @@ class Bot extends Client {
 
 		this.utils = new Util(this);
 
-		/**
-		 * The commands of the bot.
-		 * @type {Collection<string, Command>}
-		 */
-		this.commands = new Collection();
-
-		this.events = new Collection();
-
 		this.embeds = new Embeds(this);
+
+		this.commands = new CommandManager(this);
 
 		if (this.config.debug) {
 			this.on('debug', (message) => this.logger.log('DJS Debug', message));

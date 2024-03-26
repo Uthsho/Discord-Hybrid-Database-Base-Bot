@@ -1,4 +1,5 @@
 // eslint-disable-next-line no-unused-vars
+const Discordjs = require('discord.js');
 const Command = require('./Command');
 
 class CommandOption {
@@ -6,8 +7,9 @@ class CommandOption {
 	/**
 	 *
 	 * @param {Command} main The main command structure
+	 * @param {CommandOptionType} type The type of this command option
 	 */
-	constructor(main) {
+	constructor(main, type) {
 		/**
 		 * The name of this command option.
 		 * @type {string}
@@ -23,17 +25,9 @@ class CommandOption {
 		 * The type of this command option.
 		 * @type {CommandOptionType}
 		 */
-		this.type = 'unknown';
-
-		/**
-		 * Whether this option is required or not.
-		 * @type {boolean}
-		 */
-		this.required = null;
+		this.type = type;
 
 		this.main = main;
-
-		this.validate();
 	}
 
 	get client() {
@@ -59,29 +53,18 @@ class CommandOption {
 		this.name = name;
 		return this;
 	}
-	/**
-	 *
-	 * @param {boolean} required Whether this command option is required or not.
-	 * @returns {this}
-	 */
-	setRequired(required) {
-		this.required = required;
-		return this;
-	}
 
 	/**
-	 *
-	 * @param {CommandOptionType} type What the type of command option it is.
-	 * @returns {this}
+	 * This command generates slash command option data
+	 * @param {Discordjs.SlashCommandBuilder} cmd The command to generate the slash command option data for
 	 */
-	setType(type) {
-		this.type = type;
-		return this;
+	generateSlashCommandOption(cmd) {
+		this.client.logger.crash('CommandOption', `Slash command option generator for ${this.type} is not implemented.`);
 	}
 
 
-	validate(isInvalid = false) {
-		let invalid = isInvalid;
+	validate() {
+		let invalid = false;
 
 		if (!this.name || !this.name.length) {
 			invalid = true;
@@ -93,30 +76,37 @@ class CommandOption {
 			this.client.logger.error('CommandOption', `Description for ${this.name} in command ${this.main.name} is not provided.`);
 		}
 
-		if (this.required === null) {
-			invalid = true;
-			this.client.logger.error('CommandOption', `Required for ${this.name} in command ${this.main.name} is not provided.`);
-		}
-
-		const types = ['channel', 'integer', 'mentionable', 'number', 'role', 'string', 'subCommand', 'subCommandGroup', 'user'];
+		const types = ['channel', 'integer', 'mentionable', 'number', 'role', 'string', 'subCommand', 'subCommandGroup', 'user', 'attachment'];
 
 		if (this.type === 'unknown' || !types.includes(this.type)) {
 			invalid = true;
 			this.client.logger.error('CommandOption', `Type for ${this.name} in command ${this.main.name} is invalid.`);
 		}
 
+		if (this.type === 'attachment' && this.main.type !== 'slash') {
+			invalid = true;
+			this.client.logger.error('CommandOption', `Attachment type is only supported for slash commands.`);
+		}
 
-		if (invalid) {
-			this.client.logger.crash('CommandOption', `Invalid command option in ${this.main.path}`);
+		if (this.type === 'boolean' && this.main.type !== 'slash') {
+			invalid = true;
+			this.client.logger.error('CommandOption', `Boolean type is only supported for slash commands.`);
 		}
 
 		return invalid;
+	}
+	/**
+	 * @param {...Object<string, boolean|string>} [props] Specific properties to include/exclude.
+	 * @returns {unknown}
+	 */
+	toJSON(...props) {
+		return Discordjs.flatten(this, ...props);
 	}
 
 }
 
 /**
- * @typedef {('unknown'|'channel'|'integer'|'mentionable'|'number'|'role'|'string'|'subCommand'|'subCommandGroup'|'user')} CommandOptionType
+ * @typedef {('unknown'|'channel'|'integer'|'mentionable'|'number'|'role'|'string'|'subCommand'|'subCommandGroup'|'user'|'attachment'|'boolean')} CommandOptionType
  */
 
 
