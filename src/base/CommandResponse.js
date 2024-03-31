@@ -41,7 +41,11 @@ class CommandResponse {
 		return this.interaction?.guild || this.message?.guild;
 	}
 
-    
+	
+
+    get reply() {
+		return this.interaction?.reply || this.message?.reply;
+	}
 
 
 }
